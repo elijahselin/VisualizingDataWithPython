@@ -1,0 +1,88 @@
+Module 3 - Specialized Visualization Tools
+
+***Learning Objectives***
+
+*Pie Charts, and how to create them with Matplotlib.
+*Box Plots, and how to create them with Matplotlib.
+*Scatter Plots and bubble plots, and how to create them with Matplotlib.
+
+
+
+***Pie Charts***
+
+Illustrates proportion.
+
+We are interested in seeing a breakdown of imigration by continent.
+
+EXAMPLE***
+
+#create a dataframe with the total immigrants for each continent
+df_continents = df_canada.groupby['Continent', axis = 0].sum()
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df_continents["Total"].plot(kind = 'pie')
+
+plt.title("Immigration to Canada by Continent (1980-2013)")
+plt.show()
+***
+
+There is skepticism about the viability of pie charts as an accurate way to
+show proportion. Bar charts are considered to be better at representing and
+communicating the data in a consistent way.
+
+
+
+***Box Plots***
+
+A boxplot statistically represents the distribution of data through 5 main
+domains.
+Minimum: the smallest number in the sorted data. (First quartile - 1.5 * the
+interquartile range)
+First Quartile: 25% of the way through the sorted data.
+Median
+Third Quartile: 75% of the way through the sorted data.
+Maximum: The highest number in the sorted data (Third quartile + 1.5 *
+Interquartile range)
+Boxplots also show the outliers that lie beyond the upper and lower extremes.
+
+Example***
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df_japan = df_canada.loc[["Japan"], years].tranpose()
+df_japan.plot(kind = 'box')
+
+plt.title["Box plot of Japanese immigrants from 1980-2013"]
+plt.ylabel["Number of Immigrants"]
+plt.show()
+***
+
+
+
+***Scatter Plots***
+
+Displays values pertaining to typically two variables against each other.
+Usually it is a dependent variable to be plotted against an independent
+variable to determine if any correlation between the two variables exists.
+
+We are interested in plotting a scatter plot of the total annual immigration to
+Canada from 1980 to 2013.
+
+Example***
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df_total.plot(
+        kind = "scatter",
+        x = "year",
+        y = "total"
+)
+
+plt.title("Total immigrant population to Canada from 1980-2013")
+plt.xlabel("Year")
+plt.ylable("Number of Immigrants")
+plt.show()

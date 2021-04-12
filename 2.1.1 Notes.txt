@@ -1,0 +1,119 @@
+Module 2 - Basic Visualization Tools
+
+***Learning Objectives***
+
+*Area Plots, and how to create them with Matplotlib
+*Histograms, nad how to create them with Matplotlib
+*Bar charts, and how to create them with Matplotlib
+
+
+
+***Area Plots***
+
+An area plot is used to represent cumulated toatls using numbers or percentages
+over time. Commonly used when trying to compare two or more quatitities.
+
+EXAMPLE:
+
+# data wrangling, we want to look at just the top 5 countries and put them in a line plot
+#create a list of the years in our data set
+years = list(map(str, range(1980, 2014)))
+
+#sort the data frame by total immigrants from each country to canada
+df_canada.sort_values(["Total"], ascending = False, axis = 0, inplace = True)
+
+
+# make a new dataframe that only has the top 5 countries data in it
+# the data frame also needs it's axis switched so the countries become columns
+# and the years become indices for plotting (indices are plotted on the horizontal axis)
+
+#top 5
+df_top5 = df_canada.head()
+#switch axis
+df_top5 = df_top5[years].transpose()
+
+#import matplotlib for plotting
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+# plotting the area plot
+df_top5.plot(kind = 'area')
+plt.title('Immigration trend of top 5 countries')
+plt.ylable('Number of immigrants')
+plt.xlabel('years')
+plt.show()
+
+
+
+***Histograms***
+
+Histogram - a way fo representing the frequency distribution of a variable by
+dividing the data set into bins and putting each dataset in it's respective
+bin. The bins are then displayed in order as vertical bars.
+
+A range of 34129 divided amongst 10 bins of equal width.
+The first bin takes values between 0 and 3413.
+175 data points fall into this category.
+175 becomes the height of that particular bin.
+The same process is repeated for the other bins.
+
+We are intereseted in visualizing the distribution of immigrants to Canada in
+the year 2013.
+EXAMPLE***
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df_canada['2013'].plot(kind = 'hist')
+plt.title('Histogram of Immigration from 195 countries in 2013')
+plt.ylabel('Number of Countries')
+plt.xlabel('Number of Immigrants')
+
+plt.show
+***
+
+the bins are not alighned with the tick marks on the horizontal axis, making
+the chart difficult to read
+
+EXAMPLE***
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+
+count, bin_edges = np.histogram(df_canada['2013'])
+
+df_canada['2013'].plot(kind = 'hist', xticks = bin_edges)
+plt.title('Histogram of Immigration from 195 countries in 2013')
+plt.ylabel('Number of Countries')
+plt.xlabel('Number of Immigrants')
+
+plt.show()
+***
+
+
+***Bar Charts***
+
+A bar chart is commonly used to compare the values of a variable at a given
+point in time.
+
+We are interested in visualizing how immigration from Iceland to Canada looked
+like from 1980 to 2013
+
+Example***
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+years = list(map(str, range(1980, 2014)))
+df_iceland = df_canada.loc['Iceland', years]
+
+df_iceland.plot(kind = 'bar')
+
+plt.title('Icelandic immigrants to canada from 1980 to 2013')
+plt.xlabel('Year')
+plt.ylabel('Number of Immigrants')
+
+plt.show()
+***
+

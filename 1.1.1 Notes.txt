@@ -1,0 +1,190 @@
+Module 1 - Introduction to Visualization Tools
+
+
+***Learning Objectives***
+
+*Data Visualization and some of the best practices to keep in mind when
+    creating plots and visuals.
+*The history and the achitecture of Matplotlib.
+*Basic plotting with Matplotlib.
+*The dataset on immigration to Canada, which will be used extensively
+    throughout the course.
+*Generating line plots using Matplotlib.
+
+
+***Introductionto Data Visualization***
+
+Build visuals to...
+exploratory data analysis
+communicate data clearly
+share unbiased representation of data
+use them to support recommendation to different stake holders
+
+Less is more effective, attractive, and impactive
+
+Get rid of anything that is distracting from what the main message of the graph
+
+For more examples, check out:
+
+http://www.darkhorseanalytics.com/
+
+
+***Introduction to Matplotlib***
+
+History
+
+Created by John Hunter
+Originally an EEG/ECoG Visualization Tool
+Analogous to Matlab scripting interface
+
+Architecture
+3 layers
+Backend layer
+Artist layer
+Scripting layer
+
+
+Backend layer has three built in abstract interface classes:
+1. FigureCanvas: maplotlib.backend_bases.FigureCanvas
+    *Encompasses the area onto which the figure is drawn
+2. Renderer: matplotlib.backend_bases.Renderer
+    *Knows how to draw on the FigureCanvas
+3. Event: matplotlib.backend_bases.Event
+    *Handles user inputs such as keyboard strokes and mouse clicks
+
+
+Artist Layer
+*Comprised of one main object- Artist:
+    * Knows how to use the Renderer to draw on the canvas.
+*Title, lines, tick labels, and images all correspond to individual Artist instances.
+*Two Types of Artist objects:
+    1. Primitive: Line2D, Rectangle, Circle, and Text.
+    2. Composite: Axis, Tick, Axes, and Figure
+*Each composite artist may contain other composite artists as well as primitive artists
+
+
+Putting the Artist Layer to use
+* Let's try to generate a histogram of some data using the Artist layer:
+
+from matplotlib.backend.backend_agg import FigureCanvasAgg as FigureCanvas # import Figure Canvas
+from matplotlib.figure import Figure # import Figure artist
+fig = Figure()
+canvas = FigureCanvas(fig)
+
+# create 10000 randmom numbers using numpy
+import numpy as np
+x = np.random.randn(10000)
+
+ax = fig.add_subplot(111) # create an axes artist
+# 111 is from the MATLAB convention that creates one row and one column, and uses the first cell in that grid for the location of the new axes
+
+ax.hist(x,100) # generate a histogram of the 1000 numbers
+# 100 means create 100 bins
+
+# add a title to the figure and save it
+ax.set_title(r"Normal Distribution with $\mu = 1, \sigma = 1$")
+fig.savefig('matplotlib_histogram.png')
+
+
+Scripting Layer
+Made for people who are not professional programmers
+* Comprised mainly of pyplot, a scripting interface that is lighter than the Artist layer.
+Automates the process of defining a canvas and defining a figure artist instance and connecting them.
+* Let's see how we can generate the same histogram of 10000 random values using the pyplot interface.
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.random.randn(10000)
+plt.hist(x, 100)
+plt.title(r'Normal distribution with $\mu = 0, \sigma = 10')
+plt.savefig('matplotlib_histogram.png')
+plt.show()
+
+Further Reading
+More information about Matplotlib: its history and architecture can be found at this link
+
+http://www.aosabook.org/en/matplotlib.html
+
+
+
+***Basic Plotting with Matplotlib***
+
+Example:
+
+# import the scripting interface as plt
+import matplotlib.pyplot as plt
+
+# plot a circular mark at the position (5, 5)
+plt.plot (5,5, 'o')
+plt.show()
+
+if the plot displays in a separate window, you can use the magic function which
+starts with"% Matplotlib", and to enforsce plots to be rendered within the
+browser, you pass "inlline" as the backend
+
+% matplotlib inline
+
+Matplotlib has a number of backends.
+A limitationof the backend is that you cannot modify a figure once it has
+rendered. (You would not be able to add a figure title or label axes, for
+example.) You would need to do all of that before calling the .show() function
+
+Notebook Backend
+With the notebook backend in place, if a plt function is called, it checks if
+an active figure exists, and any functions you call will be applied to this
+active figure. If a figure does not exist, it renders a new figure.
+
+Pandas has matplotlib built into it. Plotting with pandas is as simple as
+calling hte plot function on a given pandas series or dataframe.
+
+
+
+***Dataset on Immigration to Canada***
+
+45 countries
+flow of international migrants
+xlsx file
+first 20 rows irrelevant un department info
+each row is a country, has metadata such as what continent it is in or whether it is developing or developed
+each row also contains the total number of immigrants from that country for the years 1980 all the way to 2013
+will use pandas to analyze the data
+will need to import the pandas library as well as the xlrd library to be able to extract from xlsx files
+EXAMPLE
+
+import numpy as np # useful for many scientific computing application in Python
+import pandas as pd # primary data structure library
+from __future__ import print_function #adds compatibility to python 2
+
+#install xlrd
+!pip install xlrd
+
+print('xlrd installed!')
+
+df_can = pd.read_excel(
+	'https://ibm.box.com/shared/static/1w190pt9zpy5bd1ptyg2aw15awomz9pu.xlsx',
+	sheetname = "Canada by Citizenship",
+	skiprows = range(20),
+	skip_footer = 2)
+
+df_can.head() # to show the first 5 rows of the dataframe
+
+
+
+***Line Plots***
+
+A line plot is a plot that displays information as a series of datapoints called
+markers connected by straight line segments
+
+EXAMPLE
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+years = list(map(str, range(1980, 2014))) #creates a list of strings of to label each year on the graph
+df_canada.loc['Haiti', years].plot(kind = 'line')
+plt.title('Immigration from Haiti')
+plt.ylabel('Number of immigrants')
+plt.xlabel('Years')
+
+plt.show()

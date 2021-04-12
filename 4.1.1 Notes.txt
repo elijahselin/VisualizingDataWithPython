@@ -1,0 +1,42 @@
+Module 4 - Advanced Visualization Tools
+
+***Learning Objectivese***
+
+*Generating advanced visualization tools such as waffle charts and word clouds.
+*Seaborn, and how to use it to generate attractive regression plots.
+
+
+
+***Waffle Charts***
+
+A waffle chart is a visualization tool that visualizes data in relation to a whole or to highlight progress agains a given threshold.
+
+We are interested in visualizing the contibuiont of Denmark, Norway, and Sweden to the Scandinavian immigration to Canada.
+
+Matplotlib does not have a built in function to create a waffle chart, so we will have to build one by hand in the lab session.
+
+
+
+***Word Clouds***
+
+A word cloud is a depition of the importance of different words in a body of text. Bigger and bolder words represent more significance in the text.
+
+Matplotlib does not have a built in function to build word clouds, but there is another python library that can generate word clouds.
+
+
+
+***Seaborn and Regression Plots***
+
+Seaborn is based on matplotlib. Built for building statistical graphics.
+
+We are intereseted in creating a scatter plot along with a regression line to highlight trends in data of total immigration to Canada from 1980 to 2013.
+
+Example***
+import seaborn as sns
+ax = sns.regplot(x = 'year', y = 'total', data = df_tot)
+
+#There are additional parameters for personal customization.
+
+ax = sns.regplot(x = 'year', y = 'total', data = df_tot, color = 'green')
+#marker = '+'
+***

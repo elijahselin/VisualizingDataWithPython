@@ -1,0 +1,88 @@
+Module 5 - Creating Maps and Visualizing Geospatial Data
+
+***Learning Objectives***
+
+*Folium, a data visualization library in Python.
+*Creating maps of different regions of the world and how to superimpose markers on top of a map.
+*Creating Choropleth maps with Folium.
+
+
+
+***Introduction to Folium***
+
+Folium is a visualization library that was mostly designed for use with visualizing data on maps. This allows for placing markers on a map as well as creating choropleth visualizations.
+
+Creating world maps using Folium:
+Example***
+
+world_map = folium.Map()
+world_map
+***
+
+folium maps are interactive (You can zoom in and out after the maps has rendered)
+The default maps type is open street, where the streets are displayed when zoomed in and countries' borders are displayed when zoomed all of the way out.
+
+Let's create a world map centered around Canada.
+
+Example***
+world_map = folium.Map(
+    location = [56.130, -106.35]
+    zoom_start = 4
+)
+world_map
+
+There are other maps styles that can be used using the "tiles" parameter
+"Stamen Toner" is good for visualizing coastal zones and meandering rivers
+"Stamen terrain" is good for visualizing hlls and vegetation
+
+
+
+***Maps with Markers***
+
+Let's look at how to super impose markers.
+
+Example***
+canada_map = folium.Map(
+    location = (56.130, -106.35)
+    zoom_start = 4
+)
+
+ontario = folium.Map.FeatureGroup()
+
+ontario.add_child(
+    folium.feature.CircleMaker(
+        [51.25, -85.32],
+        radius = 5,
+        color = 'red',
+        fill_color = 'red'
+    )
+)
+
+canada_map.add_child(ontario)
+
+folium.Marker([51.25, -85.32] ,popup = 'Ontario').add_to(canada_map)
+
+canada_map
+***
+
+
+
+***Choropleth Maps***
+
+A choropleth map is a thematic map in which areas are shaded or patterned in proportion to the measurement of the statistical variable being displayed by the map.
+
+In order to make a choropleth map of the world, we would need a Geo JSON file that lists each country along with any geospatial data to define its borders and boundaries.
+
+Let's see how we can create a choropleth map of the world that shows immigration to Canada.
+
+Example***
+world_map = folium.Map(
+    zoom_start = 1,
+    tiles = ""
+)
+
+world_geo = rworld_countries.json'
+
+world_map.
+***
+The video came through too grainy to read the example code.
